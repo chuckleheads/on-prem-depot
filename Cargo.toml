@@ -1,0 +1,25 @@
+[package]
+name = "Habitat Builder"
+version = "0.1.0"
+authors = ["Travis Elliott Davis <edavis@chef.io>"]
+
+[dependencies]
+clap= "*"
+diesel = { version = "*", features = ["postgres"] }
+diesel_migrations = "*"
+failure = "*"
+r2d2 = "*"
+r2d2-diesel = "*"
+rocket = "*"
+rocket_codegen = "*"
+rocket_contrib = "*"
+serde = "*"
+serde_derive = "*"
+serde_json = "*"
+toml = { version = "*", default-features = false }
+url = "*"
+
+[[bin]]
+name = "builder-api"
+path = "src/main.rs"
+doc = false
