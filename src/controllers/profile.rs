@@ -1,4 +1,3 @@
-use rocket::http::RawStr;
 use db;
 use models::origin::*;
 use rocket::Route;
@@ -27,7 +26,7 @@ fn post_profile_access_tokens(conn: db::DbConn) -> Json<Vec<Origin>> {
 }
 
 #[delete("/profile/access_tokens/<id>")]
-fn delete_profile_access_tokens(conn: db::DbConn, id: &RawStr) -> Json<Vec<Origin>> {
+fn delete_profile_access_tokens(conn: db::DbConn, id: i32) -> Json<Vec<Origin>> {
 
     unimplemented!()
 }

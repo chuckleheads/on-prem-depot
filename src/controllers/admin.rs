@@ -15,7 +15,7 @@ fn admin_search(conn: db::DbConn) -> Json<Vec<Origin>> {
 }
 
 #[get("/admin/accounts/<id>")]
-fn admin_account_show(conn: db::DbConn, id: &RawStr) -> Json<Vec<Origin>> {
+fn admin_account_show(conn: db::DbConn, id: i32) -> Json<Vec<Origin>> {
 
     unimplemented!()
 }

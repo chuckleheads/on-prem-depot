@@ -38,14 +38,14 @@ start-datastore() {
 }
 
 start-api() {
-  hab svc load edavis/rocket-diesel-demo --bind datastore:postgresql.default
+  hab svc load edavis/builder --bind datastore:postgresql.default
 }
 
 stop-api() {
-  hab svc unload edavis/rocket-diesel-demo
+  hab svc unload edavis/builder
 }
 
-build-api() {
+build-builder() {
   stop-api
   NO_INSTALL_DEPS=$(no_install_deps "builder-$component") \
     build ./habitat-dev
