@@ -1,9 +1,7 @@
-CREATE SEQUENCE IF NOT EXISTS origin_package_id_seq;
-
 CREATE TABLE IF NOT EXISTS origin_packages (
-  id bigint PRIMARY KEY DEFAULT next_id_v1('origin_package_id_seq'),
-  origin_id bigint REFERENCES origins(id),
-  owner_id bigint,
+  id PRIMARY KEY SEQUENCE,
+  origin_id int REFERENCES origins(id),
+  owner_id int,
   name text,
   ident text UNIQUE,
   checksum text,

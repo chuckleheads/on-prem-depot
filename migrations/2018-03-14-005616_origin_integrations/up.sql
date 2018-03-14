@@ -1,7 +1,5 @@
-CREATE SEQUENCE IF NOT EXISTS origin_integration_id_seq;
-
 CREATE TABLE IF NOT EXISTS origin_integrations (
-  id bigint PRIMARY KEY DEFAULT next_id_v1('origin_integration_id_seq'),
+  id PRIMARY KEY SEQUENCE,
   origin text,
   integration text,
   name text,

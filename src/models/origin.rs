@@ -2,9 +2,9 @@ use schema::origins;
 
 #[derive(Debug, Serialize, Queryable)]
 pub struct Origin {
-    pub id: u64,
+    pub id: i32,
     pub name: String,
-    pub owner_id: u64,
+    pub owner_id: i32,
     pub session_sync: bool,
     pub default_package_visibility: String,
 }

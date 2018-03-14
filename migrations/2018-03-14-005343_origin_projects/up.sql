@@ -1,8 +1,6 @@
-CREATE SEQUENCE IF NOT EXISTS origin_project_id_seq;
-
 CREATE TABLE IF NOT EXISTS origin_projects (
-  id bigint PRIMARY KEY DEFAULT next_id_v1('origin_project_id_seq'),
-  origin_id bigint REFERENCES origins(id),
+  id PRIMARY KEY SEQUENCE,
+  origin_id int REFERENCES origins(id),
   origin_name text,
   package_name text,
   name text,
@@ -14,10 +12,8 @@ CREATE TABLE IF NOT EXISTS origin_projects (
   UNIQUE (origin_name, package_name, name)
 );
 
-CREATE SEQUENCE IF NOT EXISTS origin_project_integration_id_seq;
-
 CREATE TABLE IF NOT EXISTS origin_project_integrations (
-  id bigint PRIMARY KEY DEFAULT next_id_v1('origin_project_integration_id_seq'),
+  id PRIMARY KEY SEQUENCE,
   origin text NOT NULL,
   name text NOT NULL,
   integration text NOT NULL,
