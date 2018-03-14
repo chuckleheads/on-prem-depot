@@ -1,7 +1,6 @@
-use diesel;
 use db;
 use models::origin::*;
-use diesel::prelude::*;
+use rocket::http::RawStr;
 use rocket::Route;
 use rocket_contrib::Json;
 
@@ -14,17 +13,17 @@ fn create_origin(conn: db::DbConn, origin: Json<NewOrigin>) -> Json<Vec<Origin>>
     unimplemented!()
 }
 
-#[put("/origins/:name")]
-fn update_origin(conn: db::DbConn) -> Json<Origin> {
+#[put("/origins/<name>")]
+fn update_origin(conn: db::DbConn, name: &RawStr) -> Json<Origin> {
     unimplemented!()
 }
 
-#[get("/origins/:name")]
-fn get_origin(conn: db::DbConn) -> Json<Origin> {
+#[get("/origins/<name>")]
+fn get_origin(conn: db::DbConn, name: &RawStr) -> Json<Origin> {
     unimplemented!()
 }
 
-#[get("/origins/:origin/keys")]
-fn get_origin_keys(conn: db::DbConn) -> Json<Vec<Origin>> {
+#[get("/origins/<origin>/keys")]
+fn get_origin_keys(conn: db::DbConn, origin: &RawStr) -> Json<Vec<Origin>> {
     unimplemented!()
 }

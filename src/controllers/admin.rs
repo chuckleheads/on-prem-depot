@@ -1,3 +1,4 @@
+use rocket::http::RawStr;
 use db;
 use models::origin::*;
 use rocket::Route;
@@ -13,8 +14,8 @@ fn admin_search(conn: db::DbConn) -> Json<Vec<Origin>> {
     unimplemented!()
 }
 
-#[get("/admin/accounts/:id")]
-fn admin_account_show(conn: db::DbConn) -> Json<Vec<Origin>> {
+#[get("/admin/accounts/<id>")]
+fn admin_account_show(conn: db::DbConn, id: &RawStr) -> Json<Vec<Origin>> {
 
     unimplemented!()
 }
