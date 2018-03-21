@@ -136,8 +136,8 @@ table! {
 table! {
     origins (id) {
         id -> Int8,
-        name -> Nullable<Text>,
-        owner_id -> Nullable<Int8>,
+        name -> Text,
+        owner_id -> Int8,
         default_package_visibility -> Text,
         created_at -> Nullable<Timestamptz>,
         updated_at -> Nullable<Timestamptz>,
