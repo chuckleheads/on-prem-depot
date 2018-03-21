@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS origin_integrations (
-  id PRIMARY KEY SEQUENCE,
+  id bigserial PRIMARY KEY,
   origin text,
   integration text,
   name text,

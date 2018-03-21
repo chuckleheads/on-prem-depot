@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS origin_secret_keys (
-  id PRIMARY KEY SEQUENCE,
-  origin_id int REFERENCES origins(id),
-  owner_id int,
+  id bigserial PRIMARY KEY,
+  origin_id bigint REFERENCES origins(id),
+  owner_id bigint,
   name text,
   revision text,
   full_name text UNIQUE,

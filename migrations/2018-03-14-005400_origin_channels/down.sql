@@ -1,1 +1,2 @@
--- This file should undo anything in `up.sql`
+DROP TABLE IF EXISTS origin_channels;
+DROP TABLE IF EXISTS origin_channel_packages;

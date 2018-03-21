@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS origin_channels (
-  id PRIMARY KEY SEQUENCE,
-  origin_id int REFERENCES origins(id),
-  owner_id int,
+  id bigserial PRIMARY KEY,
+  origin_id bigint REFERENCES origins(id),
+  owner_id bigint,
   name text,
   created_at timestamptz DEFAULT now(),
   updated_at timestamptz DEFAULT now(),
@@ -9,8 +9,8 @@ CREATE TABLE IF NOT EXISTS origin_channels (
 );
 
 CREATE TABLE IF NOT EXISTS origin_channel_packages (
-  channel_id int REFERENCES origin_channels(id) ON DELETE CASCADE,
-  package_id int REFERENCES origin_packages(id),
+  channel_id bigint REFERENCES origin_channels(id) ON DELETE CASCADE,
+  package_id bigint REFERENCES origin_packages(id),
   created_at timestamptz DEFAULT now(),
   updated_at timestamptz DEFAULT now(),
   PRIMARY KEY (channel_id, package_id)

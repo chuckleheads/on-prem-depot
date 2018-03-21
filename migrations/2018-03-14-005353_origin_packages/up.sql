@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS origin_packages (
-  id PRIMARY KEY SEQUENCE,
-  origin_id int REFERENCES origins(id),
-  owner_id int,
+  id bigserial PRIMARY KEY,
+  origin_id bigint REFERENCES origins(id),
+  owner_id bigint,
   name text,
   ident text UNIQUE,
   checksum text,
@@ -11,7 +11,6 @@ CREATE TABLE IF NOT EXISTS origin_packages (
   deps text,
   tdeps text,
   exposes text,
-  scheduler_sync bool DEFAULT false,
   visibility text NOT NULL DEFAULT 'public',
   created_at timestamptz DEFAULT now(),
   updated_at timestamptz DEFAULT now()
