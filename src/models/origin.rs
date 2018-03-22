@@ -5,7 +5,6 @@ pub struct Origin {
     pub id: i64,
     pub name: String,
     pub owner_id: i64,
-    pub session_sync: bool,
     pub default_package_visibility: String,
 }
 
@@ -13,5 +12,6 @@ pub struct Origin {
 #[table_name = "origins"]
 pub struct NewOrigin {
     pub name: String,
+    pub owner_id: i64,
     pub default_package_visibility: String,
 }

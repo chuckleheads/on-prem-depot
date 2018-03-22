@@ -1,65 +1,55 @@
 table! {
     origin_channel_packages (channel_id, package_id) {
-        channel_id -> Int8,
-        package_id -> Int8,
-        created_at -> Nullable<Timestamptz>,
-        updated_at -> Nullable<Timestamptz>,
+        channel_id -> BigInt,
+        package_id -> BigInt,
     }
 }
 
 table! {
     origin_channels (id) {
-        id -> Int8,
-        origin_id -> Nullable<Int8>,
-        owner_id -> Nullable<Int8>,
+        id -> BigInt,
+        origin_id -> Nullable<BigInt>,
+        owner_id -> Nullable<BigInt>,
         name -> Nullable<Text>,
-        created_at -> Nullable<Timestamptz>,
-        updated_at -> Nullable<Timestamptz>,
     }
 }
 
 table! {
     origin_integrations (id) {
-        id -> Int8,
+        id -> BigInt,
         origin -> Nullable<Text>,
         integration -> Nullable<Text>,
         name -> Nullable<Text>,
         body -> Nullable<Text>,
-        created_at -> Nullable<Timestamptz>,
-        updated_at -> Nullable<Timestamptz>,
     }
 }
 
 table! {
     origin_invitations (id) {
-        id -> Int8,
-        origin_id -> Nullable<Int8>,
+        id -> BigInt,
+        origin_id -> Nullable<BigInt>,
         origin_name -> Nullable<Text>,
-        account_id -> Nullable<Int8>,
+        account_id -> Nullable<BigInt>,
         account_name -> Nullable<Text>,
-        owner_id -> Nullable<Int8>,
+        owner_id -> Nullable<BigInt>,
         ignored -> Nullable<Bool>,
-        created_at -> Nullable<Timestamptz>,
-        updated_at -> Nullable<Timestamptz>,
     }
 }
 
 table! {
     origin_members (origin_id, account_id) {
-        origin_id -> Int8,
+        origin_id -> BigInt,
         origin_name -> Nullable<Text>,
-        account_id -> Int8,
+        account_id -> BigInt,
         account_name -> Nullable<Text>,
-        created_at -> Nullable<Timestamptz>,
-        updated_at -> Nullable<Timestamptz>,
     }
 }
 
 table! {
     origin_packages (id) {
-        id -> Int8,
-        origin_id -> Nullable<Int8>,
-        owner_id -> Nullable<Int8>,
+        id -> BigInt,
+        origin_id -> Nullable<BigInt>,
+        owner_id -> Nullable<BigInt>,
         name -> Nullable<Text>,
         ident -> Nullable<Text>,
         checksum -> Nullable<Text>,
@@ -70,77 +60,65 @@ table! {
         tdeps -> Nullable<Text>,
         exposes -> Nullable<Text>,
         visibility -> Text,
-        created_at -> Nullable<Timestamptz>,
-        updated_at -> Nullable<Timestamptz>,
     }
 }
 
 table! {
     origin_project_integrations (id) {
-        id -> Int8,
+        id -> BigInt,
         origin -> Text,
         name -> Text,
         integration -> Text,
         integration_name -> Text,
         body -> Text,
-        project_id -> Int8,
-        integration_id -> Int8,
-        created_at -> Nullable<Timestamptz>,
-        updated_at -> Nullable<Timestamptz>,
+        project_id -> BigInt,
+        integration_id -> BigInt,
     }
 }
 
 table! {
     origin_projects (id) {
-        id -> Int8,
-        origin_id -> Nullable<Int8>,
+        id -> BigInt,
+        origin_id -> Nullable<BigInt>,
         origin_name -> Nullable<Text>,
         package_name -> Nullable<Text>,
         name -> Nullable<Text>,
         plan_path -> Nullable<Text>,
-        owner_id -> Nullable<Int8>,
-        created_at -> Nullable<Timestamptz>,
-        updated_at -> Nullable<Timestamptz>,
+        owner_id -> Nullable<BigInt>,
         visibility -> Text,
     }
 }
 
 table! {
     origin_public_keys (id) {
-        id -> Int8,
-        origin_id -> Nullable<Int8>,
-        owner_id -> Nullable<Int8>,
+        id -> BigInt,
+        origin_id -> Nullable<BigInt>,
+        owner_id -> Nullable<BigInt>,
         name -> Nullable<Text>,
         revision -> Nullable<Text>,
         full_name -> Nullable<Text>,
         body -> Nullable<Bytea>,
-        created_at -> Nullable<Timestamptz>,
-        updated_at -> Nullable<Timestamptz>,
     }
 }
 
 table! {
     origin_secret_keys (id) {
-        id -> Int8,
-        origin_id -> Nullable<Int8>,
-        owner_id -> Nullable<Int8>,
+        id -> BigInt,
+        origin_id -> Nullable<BigInt>,
+        owner_id -> Nullable<BigInt>,
         name -> Nullable<Text>,
         revision -> Nullable<Text>,
         full_name -> Nullable<Text>,
         body -> Nullable<Bytea>,
-        created_at -> Nullable<Timestamptz>,
-        updated_at -> Nullable<Timestamptz>,
     }
 }
 
 table! {
     origins (id) {
-        id -> Int8,
+        id -> BigInt,
         name -> Text,
-        owner_id -> Int8,
+        owner_id -> BigInt,
         default_package_visibility -> Text,
-        created_at -> Nullable<Timestamptz>,
-        updated_at -> Nullable<Timestamptz>,
     }
 }
 
