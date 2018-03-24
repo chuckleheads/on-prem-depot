@@ -4,7 +4,11 @@ use rocket::Route;
 use rocket_contrib::Json;
 
 pub fn routes() -> Vec<Route> {
-    return routes![get_profile, get_profile_access_tokens, post_profile_access_tokens];
+    return routes![
+        get_profile,
+        get_profile_access_tokens,
+        post_profile_access_tokens,
+    ];
 }
 
 #[get("/profile")]

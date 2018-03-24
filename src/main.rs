@@ -3,6 +3,7 @@
 extern crate rocket;
 extern crate rocket_contrib;
 
+extern crate chrono;
 extern crate clap;
 #[macro_use]
 extern crate diesel;
@@ -57,5 +58,7 @@ fn app<'a, 'b>() -> App<'a, 'b> {
                 .help("Sets a custom config file")
                 .takes_value(true),
         )
-        .subcommand(SubCommand::with_name("start").about("Start Habitat Builder"))
+        .subcommand(SubCommand::with_name("start").about(
+            "Start Habitat Builder",
+        ))
 }

@@ -14,9 +14,7 @@ pub struct Config {
 
 impl Default for Config {
     fn default() -> Self {
-        Config {
-            db: DbConfig::default(),
-        }
+        Config { db: DbConfig::default() }
     }
 }
 
@@ -32,4 +30,5 @@ impl Config {
     fn from_raw(raw: &str) -> Result<Self> {
         let value = toml::from_str(&raw)?;
         Ok(value)
-    }}
+    }
+}

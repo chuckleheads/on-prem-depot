@@ -4,8 +4,9 @@ version = "0.1.0"
 authors = ["Travis Elliott Davis <edavis@chef.io>"]
 
 [dependencies]
-clap= "*"
-diesel = { version = "*", features = ["postgres"] }
+chrono = { version = "*", features = ["serde"] }
+clap = "*"
+diesel = { version = "*", features = ["postgres", "chrono"] }
 diesel_migrations = "*"
 failure = "*"
 r2d2 = "*"

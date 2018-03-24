@@ -2,6 +2,8 @@ table! {
     origin_channel_packages (channel_id, package_id) {
         channel_id -> BigInt,
         package_id -> BigInt,
+        created_at -> Nullable<Timestamptz>,
+        updated_at -> Nullable<Timestamptz>,
     }
 }
 
@@ -11,6 +13,8 @@ table! {
         origin_id -> Nullable<BigInt>,
         owner_id -> Nullable<BigInt>,
         name -> Nullable<Text>,
+        created_at -> Nullable<Timestamptz>,
+        updated_at -> Nullable<Timestamptz>,
     }
 }
 
@@ -21,6 +25,8 @@ table! {
         integration -> Nullable<Text>,
         name -> Nullable<Text>,
         body -> Nullable<Text>,
+        created_at -> Nullable<Timestamptz>,
+        updated_at -> Nullable<Timestamptz>,
     }
 }
 
@@ -33,6 +39,8 @@ table! {
         account_name -> Nullable<Text>,
         owner_id -> Nullable<BigInt>,
         ignored -> Nullable<Bool>,
+        created_at -> Nullable<Timestamptz>,
+        updated_at -> Nullable<Timestamptz>,
     }
 }
 
@@ -42,6 +50,8 @@ table! {
         origin_name -> Nullable<Text>,
         account_id -> BigInt,
         account_name -> Nullable<Text>,
+        created_at -> Nullable<Timestamptz>,
+        updated_at -> Nullable<Timestamptz>,
     }
 }
 
@@ -60,6 +70,8 @@ table! {
         tdeps -> Nullable<Text>,
         exposes -> Nullable<Text>,
         visibility -> Text,
+        created_at -> Nullable<Timestamptz>,
+        updated_at -> Nullable<Timestamptz>,
     }
 }
 
@@ -73,6 +85,8 @@ table! {
         body -> Text,
         project_id -> BigInt,
         integration_id -> BigInt,
+        created_at -> Nullable<Timestamptz>,
+        updated_at -> Nullable<Timestamptz>,
     }
 }
 
@@ -85,6 +99,8 @@ table! {
         name -> Nullable<Text>,
         plan_path -> Nullable<Text>,
         owner_id -> Nullable<BigInt>,
+        created_at -> Nullable<Timestamptz>,
+        updated_at -> Nullable<Timestamptz>,
         visibility -> Text,
     }
 }
@@ -98,6 +114,8 @@ table! {
         revision -> Nullable<Text>,
         full_name -> Nullable<Text>,
         body -> Nullable<Bytea>,
+        created_at -> Nullable<Timestamptz>,
+        updated_at -> Nullable<Timestamptz>,
     }
 }
 
@@ -110,6 +128,8 @@ table! {
         revision -> Nullable<Text>,
         full_name -> Nullable<Text>,
         body -> Nullable<Bytea>,
+        created_at -> Nullable<Timestamptz>,
+        updated_at -> Nullable<Timestamptz>,
     }
 }
 
@@ -119,6 +139,8 @@ table! {
         name -> Text,
         owner_id -> BigInt,
         default_package_visibility -> Text,
+        created_at -> Nullable<Timestamptz>,
+        updated_at -> Nullable<Timestamptz>,
     }
 }
 
