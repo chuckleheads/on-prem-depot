@@ -16,5 +16,11 @@ pub struct Origin {
 pub struct NewOrigin {
     pub name: String,
     pub owner_id: i64,
+    pub default_package_visibility: Option<String>,
+}
+
+#[derive(Debug, Deserialize, Insertable)]
+#[table_name = "origins"]
+pub struct UpdateOrigin {
     pub default_package_visibility: String,
 }

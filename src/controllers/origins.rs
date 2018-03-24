@@ -25,9 +25,15 @@ fn create_origin(conn: db::DbConn, origin: Json<NewOrigin>) -> status::Created<J
     status::Created(format!("/origins/{}", name), Some(Json(val)))
 }
 
-#[put("/origins/<name>")]
-fn update_origin(conn: db::DbConn, name: &RawStr) -> Json<Origin> {
+#[put("/origins/<name>", format = "application/json", data = "<pacakge_visibility>")]
+fn update_origin(conn: db::DbConn, name: &RawStr, pacakge_visibility: Json<UpdateOrigin>) -> status::Accepted<Json<Origin>> {
+    use schema::origins::dsl::{origins, default_package_visibilit};
+    let val = diesel::update(origins.find(name.percent_decode_lossy()))
+        .set(default_package_visibility.eq(&pacakge_visibility.into_inner()))
+        .execute(&*conn);
     unimplemented!()
+
+    // status::Accepted(Some(Json(val)))
 }
 
 #[get("/origins/<origin>")]
