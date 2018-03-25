@@ -1,3 +1,6 @@
+use diesel;
+use diesel::PgConnection;
+use diesel::prelude::*;
 use chrono::NaiveDateTime;
 use schema::origins;
 
@@ -23,4 +26,12 @@ pub struct NewOrigin {
 #[table_name = "origins"]
 pub struct UpdateOrigin {
     pub default_package_visibility: String,
+}
+
+impl Origin {
+    pub fn insert(origin: &NewOrigin, conn: &PgConnection) -> bool {
+        diesel::insert_into(origins::table)
+        .values(origin)
+        .execute(conn).is_ok()
+    }
 }

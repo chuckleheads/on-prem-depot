@@ -6,34 +6,27 @@ use rocket::http::RawStr;
 use rocket::response::status;
 use rocket::Route;
 use rocket_contrib::Json;
-use schema::origins;
 
 pub fn routes() -> Vec<Route> {
     return routes![create_origin, update_origin, get_origin];
 }
 
 #[post("/origins", format = "application/json", data = "<origin>")]
-fn create_origin(conn: db::DbConn, origin: Json<NewOrigin>) -> status::Created<Json<Origin>> {
+fn create_origin(conn: db::DbConn, origin: Json<NewOrigin>) -> status::Created<Json<bool>> {
     let name = &origin.name.clone();
-    let val = diesel::insert_into(origins::table)
-        .values(&origin.into_inner())
-        .get_result(&*conn)
-        .expect("Error saving origin");
-    println!("val = {:?}", &val);
+    let res = Origin::insert(&origin.into_inner(), &*conn);
 
     // TODO: hardcoding this URL feels bad - surely there's a way to infer this?
-    status::Created(format!("/origins/{}", name), Some(Json(val)))
+    status::Created(format!("/origins/{}", name), Some(Json(res)))
 }
 
 #[put("/origins/<name>", format = "application/json", data = "<pacakge_visibility>")]
-fn update_origin(conn: db::DbConn, name: &RawStr, pacakge_visibility: Json<UpdateOrigin>) -> status::Accepted<Json<Origin>> {
-    use schema::origins::dsl::{origins, default_package_visibilit};
-    let val = diesel::update(origins.find(name.percent_decode_lossy()))
-        .set(default_package_visibility.eq(&pacakge_visibility.into_inner()))
-        .execute(&*conn);
-    unimplemented!()
-
-    // status::Accepted(Some(Json(val)))
+fn update_origin(conn: db::DbConn, name: &RawStr, pacakge_visibility: Json<UpdateOrigin>) -> status::Accepted<Json<bool>> {
+    use schema::origins::dsl::{origins, default_package_visibility, name as origin_name};
+    let res = diesel::update(origins.filter(origin_name.eq(name.percent_decode_lossy())))
+        .set(default_package_visibility.eq(&pacakge_visibility.into_inner().default_package_visibility))
+        .execute(&*conn).is_ok();
+    status::Accepted(Some(Json(res)))
 }
 
 #[get("/origins/<origin>")]
