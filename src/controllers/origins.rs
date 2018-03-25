@@ -1,8 +1,7 @@
 use db;
-use diesel;
 use diesel::prelude::*;
 use models::origin::*;
-use rocket::http::RawStr;
+use rocket::http::{RawStr, Status};
 use rocket::response::status;
 use rocket::Route;
 use rocket_contrib::Json;
@@ -12,12 +11,12 @@ pub fn routes() -> Vec<Route> {
 }
 
 #[post("/origins", format = "application/json", data = "<origin>")]
-fn create_origin(conn: db::DbConn, origin: Json<NewOrigin>) -> status::Created<Json<bool>> {
-    let name = &origin.name.clone();
-    let res = Origin::insert(&origin.into_inner(), &*conn);
+fn create_origin(conn: db::DbConn, origin: Json<NewOrigin>) -> status::Created<Json<Origin>> {
+    // TODO: punting on all the error handling here feels bad.
+    let o = Origin::insert(&origin.into_inner(), &*conn).unwrap();
 
     // TODO: hardcoding this URL feels bad - surely there's a way to infer this?
-    status::Created(format!("/origins/{}", name), Some(Json(res)))
+    status::Created(format!("/origins/{}", &o.name), Some(Json(o)))
 }
 
 #[put("/origins/<name>", format = "application/json", data = "<pacakge_visibility>")]
@@ -25,13 +24,14 @@ fn update_origin(
     conn: db::DbConn,
     name: &RawStr,
     pacakge_visibility: Json<UpdateOrigin>,
-) -> status::Accepted<Json<bool>> {
-    let res = Origin::update(
+) -> Json<Origin> {
+    // TODO: punting on all the error handling here feels bad.
+    let o = Origin::update(
         &name.percent_decode_lossy(),
         pacakge_visibility.into_inner(),
         &*conn,
-    );
-    status::Accepted(Some(Json(res)))
+    ).unwrap();
+    Json(o)
 }
 
 #[get("/origins/<origin>")]
