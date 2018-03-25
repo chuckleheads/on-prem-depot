@@ -31,7 +31,16 @@ pub struct UpdateOrigin {
 impl Origin {
     pub fn insert(origin: &NewOrigin, conn: &PgConnection) -> bool {
         diesel::insert_into(origins::table)
-        .values(origin)
-        .execute(conn).is_ok()
+            .values(origin)
+            .execute(conn)
+            .is_ok()
+    }
+
+    pub fn update(name: &str, dpv: UpdateOrigin, conn: &PgConnection) -> bool {
+        use schema::origins::dsl::{default_package_visibility, name as origin_name, origins};
+        diesel::update(origins.filter(origin_name.eq(name)))
+            .set(default_package_visibility.eq(&dpv.default_package_visibility))
+            .execute(conn)
+            .is_ok()
     }
 }

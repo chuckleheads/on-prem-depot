@@ -21,11 +21,16 @@ fn create_origin(conn: db::DbConn, origin: Json<NewOrigin>) -> status::Created<J
 }
 
 #[put("/origins/<name>", format = "application/json", data = "<pacakge_visibility>")]
-fn update_origin(conn: db::DbConn, name: &RawStr, pacakge_visibility: Json<UpdateOrigin>) -> status::Accepted<Json<bool>> {
-    use schema::origins::dsl::{origins, default_package_visibility, name as origin_name};
-    let res = diesel::update(origins.filter(origin_name.eq(name.percent_decode_lossy())))
-        .set(default_package_visibility.eq(&pacakge_visibility.into_inner().default_package_visibility))
-        .execute(&*conn).is_ok();
+fn update_origin(
+    conn: db::DbConn,
+    name: &RawStr,
+    pacakge_visibility: Json<UpdateOrigin>,
+) -> status::Accepted<Json<bool>> {
+    let res = Origin::update(
+        &name.percent_decode_lossy(),
+        pacakge_visibility.into_inner(),
+        &*conn,
+    );
     status::Accepted(Some(Json(res)))
 }
 
