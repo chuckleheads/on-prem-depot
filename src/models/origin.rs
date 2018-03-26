@@ -1,8 +1,12 @@
+use rocket::request::Request;
 use diesel;
 use diesel::PgConnection;
 use diesel::prelude::*;
 use chrono::NaiveDateTime;
 use schema::origins;
+use rocket::response::{self, Responder, Response};
+use rocket::http::ContentType;
+use serde_json;
 
 #[derive(Debug, Serialize, Queryable)]
 pub struct Origin {
@@ -38,9 +42,7 @@ impl Origin {
     pub fn update(name: &str, dpv: UpdateOrigin, conn: &PgConnection) -> QueryResult<Origin> {
         use schema::origins::dsl::{default_package_visibility, name as origin_name, origins};
         diesel::update(origins.filter(origin_name.eq(name)))
-            .set(default_package_visibility.eq(
-                &dpv.default_package_visibility,
-            ))
+            .set(default_package_visibility.eq(&dpv.default_package_visibility))
             .get_result(conn)
     }
 }

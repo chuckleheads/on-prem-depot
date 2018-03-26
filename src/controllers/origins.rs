@@ -1,22 +1,25 @@
+use rocket::response::Failure;
 use db;
 use diesel::prelude::*;
 use models::origin::*;
 use rocket::http::{RawStr, Status};
-use rocket::response::status;
 use rocket::Route;
 use rocket_contrib::Json;
+use diesel::result::{DatabaseErrorKind, Error as diesel_error};
 
 pub fn routes() -> Vec<Route> {
     return routes![create_origin, update_origin, get_origin];
 }
 
 #[post("/origins", format = "application/json", data = "<origin>")]
-fn create_origin(conn: db::DbConn, origin: Json<NewOrigin>) -> status::Created<Json<Origin>> {
-    // TODO: punting on all the error handling here feels bad.
-    let o = Origin::insert(&origin.into_inner(), &*conn).unwrap();
-
-    // TODO: hardcoding this URL feels bad - surely there's a way to infer this?
-    status::Created(format!("/origins/{}", &o.name), Some(Json(o)))
+fn create_origin(conn: db::DbConn, origin: Json<NewOrigin>) -> Result<Json<Origin>, Failure> {
+    match Origin::insert(&origin.into_inner(), &*conn) {
+        Ok(o) => Ok(Json(o)),
+        Err(diesel_error::DatabaseError(DatabaseErrorKind::UniqueViolation, _)) => {
+            Err(Failure(Status::Conflict))
+        }
+        Err(_) => Err(Failure(Status::InternalServerError)),
+    }
 }
 
 #[put("/origins/<name>", format = "application/json", data = "<pacakge_visibility>")]
@@ -24,30 +27,27 @@ fn update_origin(
     conn: db::DbConn,
     name: &RawStr,
     pacakge_visibility: Json<UpdateOrigin>,
-) -> Json<Origin> {
-    // TODO: punting on all the error handling here feels bad.
-    let o = Origin::update(
+) -> QueryResult<Json<Origin>> {
+    Origin::update(
         &name.percent_decode_lossy(),
         pacakge_visibility.into_inner(),
         &*conn,
-    ).unwrap();
-    Json(o)
+    ).map(|origin| Json(origin))
 }
 
 #[get("/origins/<origin>")]
-fn get_origin(conn: db::DbConn, origin: &RawStr) -> Option<Json<Origin>> {
+fn get_origin(conn: db::DbConn, origin: &RawStr) -> Result<Option<Json<Origin>>, Failure> {
     use schema::origins::dsl::*;
 
-    let mut o = origins
+    match origins
         .filter(name.eq(origin.percent_decode_lossy()))
         .limit(1)
-        .load::<Origin>(&*conn)
-        .expect("Error loading origins");
-
-    if o.len() == 0 {
-        None
-    } else {
-        Some(Json(o.pop().unwrap()))
+        .get_result::<Origin>(&*conn)
+        .optional()
+    {
+        Ok(Some(v)) => Ok(Some(Json(v))),
+        Ok(None) => Ok(None),
+        Err(_) => Err(Failure(Status::InternalServerError)),
     }
 }
 
