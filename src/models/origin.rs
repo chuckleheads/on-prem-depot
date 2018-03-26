@@ -45,4 +45,13 @@ impl Origin {
             .set(default_package_visibility.eq(&dpv.default_package_visibility))
             .get_result(conn)
     }
+
+    pub fn get(name: &str, conn: &PgConnection) -> QueryResult<Option<Origin>> {
+        use schema::origins::dsl::{name as origin_name, origins};
+        origins
+            .filter(origin_name.eq(name))
+            .limit(1)
+            .get_result::<Origin>(conn)
+            .optional()
+    }
 }

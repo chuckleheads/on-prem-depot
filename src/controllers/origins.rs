@@ -37,14 +37,7 @@ fn update_origin(
 
 #[get("/origins/<origin>")]
 fn get_origin(conn: db::DbConn, origin: &RawStr) -> Result<Option<Json<Origin>>, Failure> {
-    use schema::origins::dsl::*;
-
-    match origins
-        .filter(name.eq(origin.percent_decode_lossy()))
-        .limit(1)
-        .get_result::<Origin>(&*conn)
-        .optional()
-    {
+    match Origin::get(&origin.percent_decode_lossy(), &*conn) {
         Ok(Some(v)) => Ok(Some(Json(v))),
         Ok(None) => Ok(None),
         Err(_) => Err(Failure(Status::InternalServerError)),
