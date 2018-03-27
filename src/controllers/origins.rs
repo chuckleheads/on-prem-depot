@@ -8,7 +8,7 @@ use rocket_contrib::Json;
 use diesel::result::{DatabaseErrorKind, Error as diesel_error};
 
 pub fn routes() -> Vec<Route> {
-    return routes![create_origin, update_origin, get_origin];
+    routes![create_origin, update_origin, get_origin]
 }
 
 #[post("/origins", format = "application/json", data = "<origin>")]
