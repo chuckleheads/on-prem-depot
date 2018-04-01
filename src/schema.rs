@@ -108,12 +108,12 @@ table! {
 table! {
     origin_public_keys (id) {
         id -> BigInt,
-        origin_id -> Nullable<BigInt>,
-        owner_id -> Nullable<BigInt>,
-        name -> Nullable<Text>,
-        revision -> Nullable<Text>,
-        full_name -> Nullable<Text>,
-        body -> Nullable<Bytea>,
+        origin_id -> BigInt,
+        owner_id -> BigInt,
+        name -> Text,
+        revision -> Text,
+        full_name -> Text,
+        body -> Bytea,
         created_at -> Nullable<Timestamptz>,
         updated_at -> Nullable<Timestamptz>,
     }
@@ -122,12 +122,12 @@ table! {
 table! {
     origin_secret_keys (id) {
         id -> BigInt,
-        origin_id -> Nullable<BigInt>,
-        owner_id -> Nullable<BigInt>,
-        name -> Nullable<Text>,
-        revision -> Nullable<Text>,
-        full_name -> Nullable<Text>,
-        body -> Nullable<Bytea>,
+        origin_id -> BigInt,
+        owner_id -> BigInt,
+        name -> Text,
+        revision -> Text,
+        full_name -> Text,
+        body -> Bytea,
         created_at -> Nullable<Timestamptz>,
         updated_at -> Nullable<Timestamptz>,
     }

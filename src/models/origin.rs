@@ -1,12 +1,9 @@
-use rocket::request::Request;
 use diesel;
 use diesel::PgConnection;
 use diesel::prelude::*;
 use chrono::NaiveDateTime;
 use schema::origins;
-use rocket::response::{self, Responder, Response};
-use rocket::http::ContentType;
-use serde_json;
+use rocket::response::Response;
 
 #[derive(Debug, Serialize, Queryable)]
 pub struct Origin {
