@@ -3,7 +3,6 @@ use diesel::PgConnection;
 use diesel::prelude::*;
 use chrono::NaiveDateTime;
 use schema::{origin_public_keys, origin_secret_keys};
-use rocket::response::Response;
 
 // Secret Signing Keys
 
@@ -52,8 +51,7 @@ impl OriginSecretKey {
 
     pub fn update(osk: UpdateOriginSecretKey, conn: &PgConnection) -> QueryResult<OriginSecretKey> {
         use schema::origin_secret_keys::dsl::{name as osk_name, *};
-        // TED the logic here is wrong, there is only ever one row in the table
-        diesel::update(origin_secret_keys.filter(osk_name.eq(&osk.name)))
+        diesel::update(origin_secret_keys)
             .set((
                 osk_name.eq(&osk.name),
                 revision.eq(&osk.revision),

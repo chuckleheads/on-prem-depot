@@ -3,7 +3,6 @@ use diesel::PgConnection;
 use diesel::prelude::*;
 use chrono::NaiveDateTime;
 use schema::origins;
-use rocket::response::Response;
 
 #[derive(Debug, Serialize, Queryable)]
 pub struct Origin {
