@@ -10,9 +10,9 @@ table! {
 table! {
     origin_channels (id) {
         id -> BigInt,
-        origin_id -> Nullable<BigInt>,
-        owner_id -> Nullable<BigInt>,
-        name -> Nullable<Text>,
+        origin_id -> BigInt,
+        owner_id -> BigInt,
+        name -> Text,
         created_at -> Nullable<Timestamptz>,
         updated_at -> Nullable<Timestamptz>,
     }
