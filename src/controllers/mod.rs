@@ -5,6 +5,7 @@ pub mod admin;
 pub mod origins;
 pub mod profile;
 pub mod user;
+pub mod packages;
 
 pub fn routes() -> Vec<Route> {
     let mut routes = Vec::new();
@@ -13,5 +14,6 @@ pub fn routes() -> Vec<Route> {
     routes.extend(origins::routes());
     routes.extend(profile::routes());
     routes.extend(user::routes());
+    routes.extend(packages::routes());
     routes
 }
