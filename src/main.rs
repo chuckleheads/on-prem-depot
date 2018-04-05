@@ -10,6 +10,7 @@ extern crate clap;
 extern crate diesel;
 #[macro_use]
 extern crate diesel_migrations;
+extern crate habitat_core as hab_core;
 extern crate r2d2;
 extern crate r2d2_diesel;
 extern crate serde;
@@ -18,7 +19,6 @@ extern crate serde_derive;
 extern crate serde_json;
 extern crate toml;
 extern crate url;
-
 pub mod schema;
 pub mod models;
 pub mod controllers;

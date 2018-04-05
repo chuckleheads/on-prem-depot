@@ -1,11 +1,14 @@
-use rocket::response::Failure;
+use std::fs::File;
+use std::io;
+
 use db;
-use diesel::prelude::*;
+use hab_core::package::{ident, PackageArchive, PackageIdent, PackageTarget};
 use models::package::*;
-use rocket::http::{RawStr, Status};
-use rocket::Route;
 use rocket_contrib::Json;
-use diesel::result::{DatabaseErrorKind, Error as diesel_error};
+use rocket::Data;
+use rocket::http::RawStr;
+use rocket::response::{Failure, Stream};
+use rocket::Route;
 
 pub fn routes() -> Vec<Route> {
     routes![
@@ -116,17 +119,19 @@ fn download_package(
     origin: &RawStr,
     pkg: &RawStr,
     version: &RawStr,
-) -> Result<Json<Package>, Failure> {
+) -> io::Result<Stream<File>> {
     unimplemented!()
 }
 
-#[post("/pkgs/<origin>/<pkg>/<version>/<release>")]
+#[post("/pkgs/<origin>/<pkg>/<version>/<release>", format = "application/octet-stream",
+       data = "<data>")]
 fn upload_package(
     conn: db::DbConn,
     origin: &RawStr,
     pkg: &RawStr,
     version: &RawStr,
     release: &RawStr,
+    data: Data,
 ) -> Result<Json<Package>, Failure> {
     unimplemented!()
 }

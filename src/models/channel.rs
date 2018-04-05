@@ -3,6 +3,7 @@ use diesel::PgConnection;
 use diesel::prelude::*;
 use chrono::NaiveDateTime;
 use schema::{origin_channels, origins};
+use super::origin::Origin as origin_model;
 
 #[derive(Debug, Serialize, Queryable)]
 pub struct Channel {
@@ -38,12 +39,7 @@ impl Channel {
     }
 
     pub fn delete(origin: &str, channel: &str, conn: &PgConnection) -> QueryResult<usize> {
-        let origin_id: i64 = origins::table
-            .filter(origins::name.eq(origin))
-            .select(origins::id)
-            .limit(1)
-            .get_result(conn)
-            .unwrap();
+        let origin_id = origin_model::get(origin, conn).unwrap().unwrap().id;
         diesel::delete(
             origin_channels::table
                 .filter(origin_channels::name.eq(channel))

@@ -20,7 +20,12 @@ serde_json = "*"
 toml = { version = "*", default-features = false }
 url = "*"
 
+[dependencies.habitat_core]
+git = "https://github.com/habitat-sh/core.git"
+
+
 [[bin]]
 name = "builder"
 path = "src/main.rs"
 doc = false
+
