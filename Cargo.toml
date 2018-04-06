@@ -17,6 +17,7 @@ rocket_contrib = "*"
 serde = "*"
 serde_derive = "*"
 serde_json = "*"
+tempdir = "*"
 toml = { version = "*", default-features = false }
 url = "*"
 

@@ -4,7 +4,7 @@ pkg_maintainer="Elliott Davis <elliott@excellent.io>"
 pkg_license=('Apache-2.0')
 pkg_bin_dirs=(bin)
 pkg_deps=(core/glibc core/openssl core/gcc-libs core/postgresql)
-pkg_build_deps=(core/coreutils core/rust-nightly core/gcc core/git core/make)
+pkg_build_deps=(core/coreutils core/rust-nightly core/gcc core/git core/make core/libsodium core/pkg-config core/libarchive)
 pkg_binds=(
   [datastore]="port"
 )

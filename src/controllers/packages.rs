@@ -7,8 +7,9 @@ use models::package::*;
 use rocket_contrib::Json;
 use rocket::Data;
 use rocket::http::RawStr;
-use rocket::response::{Failure, Stream};
+use rocket::response::{status, Failure, Stream};
 use rocket::Route;
+use tempdir::TempDir;
 
 pub fn routes() -> Vec<Route> {
     routes![
@@ -132,8 +133,13 @@ fn upload_package(
     version: &RawStr,
     release: &RawStr,
     data: Data,
-) -> Result<Json<Package>, Failure> {
-    unimplemented!()
+) -> Result<status::Accepted<String>, Failure> {
+    let dir = TempDir::new("/tmp").unwrap();
+    let file_path = dir.path().join("temp.hart");
+    let status = data.stream_to_file(file_path)
+        .map(|n| n.to_string())
+        .unwrap();
+    Ok(status::Accepted(Some(status)))
 }
 
 #[patch("/pkgs/<origin>/<pkg>/<version>/<release>/<visibility>")]

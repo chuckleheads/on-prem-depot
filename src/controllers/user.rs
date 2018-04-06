@@ -9,12 +9,10 @@ pub fn routes() -> Vec<Route> {
 
 #[get("/user/invitations")]
 fn get_user_invitations(conn: db::DbConn) -> Json<Vec<Origin>> {
-
     unimplemented!()
 }
 
 #[get("/user/origins")]
 fn get_user_origins(conn: db::DbConn) -> Json<Vec<Origin>> {
-
     unimplemented!()
 }

@@ -17,6 +17,7 @@ extern crate serde;
 #[macro_use]
 extern crate serde_derive;
 extern crate serde_json;
+extern crate tempdir;
 extern crate toml;
 extern crate url;
 pub mod schema;
@@ -25,7 +26,7 @@ pub mod controllers;
 pub mod db;
 pub mod config;
 pub mod error;
-
+pub mod types;
 use std::io::stdout;
 pub use self::config::{Config, CFG_DEFAULT_PATH};
 pub use self::error::{Error, Result};
