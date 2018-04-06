@@ -29,22 +29,22 @@ pub fn routes() -> Vec<Route> {
     ]
 }
 
-#[get("/pkgs/search/<query>")]
+#[get("/pkgs/search/<query>", rank = 1)]
 fn search_packages(conn: db::DbConn, query: &RawStr) -> Result<Json<Package>, Failure> {
     unimplemented!()
 }
 
-#[get("/pkgs/<origin>")]
+#[get("/pkgs/<origin>", rank = 2)]
 fn list_packages_for_origin(conn: db::DbConn, origin: &RawStr) -> Result<Json<Package>, Failure> {
     unimplemented!()
 }
 
-#[get("/<origin>/pkgs")]
+#[get("/<origin>/pkgs", rank = 3)]
 fn list_unique_packages(conn: db::DbConn, origin: &RawStr) -> Result<Json<Package>, Failure> {
     unimplemented!()
 }
 
-#[get("/pkgs/<origin>/<pkg>")]
+#[get("/pkgs/<origin>/<pkg>", rank = 2)]
 fn list_packages(
     conn: db::DbConn,
     origin: &RawStr,
@@ -53,7 +53,7 @@ fn list_packages(
     unimplemented!()
 }
 
-#[get("/pkgs/<origin>/<pkg>/versions")]
+#[get("/pkgs/<origin>/<pkg>/versions", rank = 1)]
 fn list_package_versions(
     conn: db::DbConn,
     origin: &RawStr,
@@ -62,7 +62,7 @@ fn list_package_versions(
     unimplemented!()
 }
 
-#[get("/pkgs/<origin>/<pkg>/latest")]
+#[get("/pkgs/<origin>/<pkg>/latest", rank = 1)]
 fn show_package_latest(
     conn: db::DbConn,
     origin: &RawStr,
@@ -71,7 +71,7 @@ fn show_package_latest(
     unimplemented!()
 }
 
-#[get("/pkgs/<origin>/<pkg>/<version>")]
+#[get("/pkgs/<origin>/<pkg>/<version>", rank = 2)]
 fn list_package_version(
     conn: db::DbConn,
     origin: &RawStr,
@@ -81,7 +81,7 @@ fn list_package_version(
     unimplemented!()
 }
 
-#[get("/pkgs/<origin>/<pkg>/<version>/latest")]
+#[get("/pkgs/<origin>/<pkg>/<version>/latest", rank = 1)]
 fn show_package_version_latest(
     conn: db::DbConn,
     origin: &RawStr,
@@ -91,7 +91,7 @@ fn show_package_version_latest(
     unimplemented!()
 }
 
-#[get("/pkgs/<origin>/<pkg>/<version>/<release>")]
+#[get("/pkgs/<origin>/<pkg>/<version>/<release>", rank = 2)]
 fn show_package_version_release(
     conn: db::DbConn,
     origin: &RawStr,
@@ -114,7 +114,7 @@ fn package_channels(
 }
 
 // TODO: probably need to return a binary stream here
-#[get("/pkgs/<origin>/<pkg>/<version>/download")]
+#[get("/pkgs/<origin>/<pkg>/<version>/download", rank = 1)]
 fn download_package(
     conn: db::DbConn,
     origin: &RawStr,

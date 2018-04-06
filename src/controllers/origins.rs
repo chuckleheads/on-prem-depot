@@ -23,17 +23,17 @@ fn create_origin<'a>(conn: db::DbConn, origin: Json<NewOrigin>) -> Result<Json<O
     }
 }
 
-#[put("/origins/<name>", format = "application/json", data = "<pacakge_visibility>")]
+#[put("/origins/<name>", format = "application/json", data = "<package_visibility>")]
 fn update_origin(
     conn: db::DbConn,
     name: OriginName,
-    pacakge_visibility: Json<UpdateOrigin>,
+    package_visibility: Json<UpdateOrigin>,
 ) -> QueryResult<Json<Origin>> {
-    Origin::update(&name.to_string(), pacakge_visibility.into_inner(), &*conn)
+    Origin::update(&name.to_string(), package_visibility.into_inner(), &*conn)
         .map(|origin| Json(origin))
 }
 
-#[get("/origins/<origin>")]
+#[get("/origins/<origin>", rank = 1)]
 fn get_origin(conn: db::DbConn, origin: OriginName) -> Result<Option<Json<Origin>>, Failure> {
     match Origin::get(&origin.to_string(), &*conn) {
         Ok(Some(v)) => Ok(Some(Json(v))),
