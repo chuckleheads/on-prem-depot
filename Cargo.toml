@@ -1,7 +1,7 @@
 [package]
 name = "Habitat Builder"
 version = "0.1.0"
-authors = ["Travis Elliott Davis <edavis@chef.io>", "Josh _ Black <jblack@chef.io>"]
+authors = ["Travis Elliott Davis <edavis@chef.io>", "Josh Black <jblack@chef.io>"]
 
 [dependencies]
 chrono = { version = "*", features = ["serde"] }
