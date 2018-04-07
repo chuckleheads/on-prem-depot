@@ -4,3 +4,8 @@ port = 5432
 user = "admin"
 password = "admin"
 database = "builder"
+
+[s3]
+username = "key"
+password = "value"
+bucket = "habitat-builder-bucket"

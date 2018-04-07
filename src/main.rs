@@ -16,20 +16,23 @@ extern crate r2d2_diesel;
 extern crate serde;
 #[macro_use]
 extern crate serde_derive;
+extern crate rusoto_core;
+extern crate rusoto_credential as aws_creds;
+extern crate rusoto_s3;
 extern crate serde_json;
 extern crate tempdir;
 extern crate toml;
 extern crate url;
-pub mod schema;
-pub mod models;
+pub mod config;
 pub mod controllers;
 pub mod db;
-pub mod config;
 pub mod error;
+pub mod models;
+pub mod schema;
 pub mod types;
-use std::io::stdout;
 pub use self::config::{Config, CFG_DEFAULT_PATH};
 pub use self::error::{Error, Result};
+use std::io::stdout;
 
 use clap::{App, Arg, SubCommand};
 
@@ -48,6 +51,7 @@ fn main() {
         .mount("/", controllers::routes())
         .catch(error::error_handlers())
         .manage(conn)
+        .manage(config.s3)
         .launch();
 }
 

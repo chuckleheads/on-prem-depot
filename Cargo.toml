@@ -20,6 +20,9 @@ serde_json = "*"
 tempdir = "*"
 toml = { version = "*", default-features = false }
 url = "*"
+rusoto_core = "*"
+rusoto_s3 = "*"
+rusoto_credential = "*"
 
 [dependencies.habitat_core]
 git = "https://github.com/habitat-sh/core.git"

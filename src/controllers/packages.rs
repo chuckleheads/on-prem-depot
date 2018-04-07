@@ -1,15 +1,21 @@
-use std::fs::File;
-use std::io;
-
+use aws_creds::StaticProvider;
+use config::S3 as s3_config;
 use db;
 use hab_core::package::{ident, PackageArchive, PackageIdent, PackageTarget};
 use models::package::*;
-use rocket_contrib::Json;
 use rocket::Data;
+use rocket::Route;
+use rocket::State;
 use rocket::http::RawStr;
 use rocket::response::{status, Failure, Stream};
-use rocket::Route;
+use rocket_contrib::Json;
+use std::fs::File;
+use std::io;
+use std::io::BufRead;
 use tempdir::TempDir;
+use rusoto_s3::{CreateBucketRequest, S3, S3Client};
+use rusoto_core::Region;
+use rusoto_core::reactor::RequestDispatcher;
 
 pub fn routes() -> Vec<Route> {
     routes![
@@ -128,17 +134,35 @@ fn download_package(
        data = "<data>")]
 fn upload_package(
     conn: db::DbConn,
+    config: State<s3_config>,
     origin: &RawStr,
     pkg: &RawStr,
     version: &RawStr,
     release: &RawStr,
     data: Data,
 ) -> Result<status::Accepted<String>, Failure> {
-    let dir = TempDir::new("/tmp").unwrap();
+    let dir = TempDir::new("tmphart").unwrap();
     let file_path = dir.path().join("temp.hart");
     let status = data.stream_to_file(file_path)
         .map(|n| n.to_string())
         .unwrap();
+    let provider =
+        StaticProvider::new_minimal(config.username.to_string(), config.password.to_string());
+    let client = S3Client::new(RequestDispatcher::default(), provider, Region::UsWest2);
+    let bucket_req = CreateBucketRequest {
+        acl: None,
+        bucket: config.bucket.to_string(),
+        create_bucket_configuration: None,
+        grant_full_control: None,
+        grant_read: None,
+        grant_read_acp: None,
+        grant_write: None,
+        grant_write_acp: None,
+    };
+    match client.create_bucket(&bucket_req).sync() {
+        Ok(res) => println!("{:?}", res),
+        Err(e) => println!("{:?}", e),
+    };
     Ok(status::Accepted(Some(status)))
 }
 
